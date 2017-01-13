@@ -17,12 +17,13 @@ public class PersonController {
 	@Autowired
 	private PersonService personService;
 
-	@RequestMapping(value="/person", method=RequestMethod.POST)
-	public void addPerson(@RequestBody Person person) {
-		personService.addPerson(person);
+	@RequestMapping(value="/person/addPerson", method=RequestMethod.POST)
+	public Person addPerson(@RequestBody Person person) {
+		return personService.addPerson(person);
+
 	}
 
-	@RequestMapping(value="persons", method=RequestMethod.GET)
+	@RequestMapping(value="person/getPerson", method=RequestMethod.GET)
 	public List<Person> getPerson() {
 		return personService.getPersons();
 	}
