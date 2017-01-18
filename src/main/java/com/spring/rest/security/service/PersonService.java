@@ -7,6 +7,7 @@ import com.spring.rest.security.model.Person;
 public interface PersonService {
 	public Person addPerson(Person person);
 	public List<Person> getPersons();
-	public void updatePerson();
-	public void deletePerson();
+	public void deletePerson(String id);
+	public void deletePerson(Person person);
+	public Person updatePerson(Person person);
 }

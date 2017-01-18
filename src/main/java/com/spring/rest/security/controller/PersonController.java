@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,6 +41,25 @@ public class PersonController {
 		return personService.getPersons();
 	}
 
+	@RequestMapping(value="person/updatePerson", method=RequestMethod.PUT)
+	@PreAuthorize("hasRole('ADMIN')")
+	public Person updatePerson(@RequestBody Person person) {
+		return personService.updatePerson(person);
+	}
+
+	@RequestMapping(value="person/deletePerson/{id}", method=RequestMethod.DELETE)
+	@PreAuthorize("hasRole('ADMIN')")
+	public String deletePersonById(@PathVariable String id) {
+		personService.deletePerson(id);
+		return "Person has been deleted !";
+	}
+
+	@RequestMapping(value="person/deletePerson", method=RequestMethod.DELETE)
+	@PreAuthorize("hasRole('ADMIN')")
+	public String deletePersonById(@RequestBody Person person) {
+		personService.deletePerson(person);
+		return "Person has been deleted !";
+	}
 
 
 }
