@@ -3,6 +3,7 @@ package com.spring.rest.security.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,8 +24,19 @@ public class PersonController {
 
 	}
 
-	@RequestMapping(value="person/getPerson", method=RequestMethod.GET)
+	@RequestMapping(value="person/user/getPerson", method=RequestMethod.GET)
 	public List<Person> getPerson() {
+		return personService.getPersons();
+	}
+
+	@RequestMapping(value="person/getPersonAdmin", method=RequestMethod.GET)
+	@PreAuthorize("hasRole('ADMIN')")
+	public List<Person> getPersonAdmin() {
+		return personService.getPersons();
+	}
+	@RequestMapping(value="person/user/getPersonUser", method=RequestMethod.GET)
+	@PreAuthorize("hasRole('USER')")
+	public List<Person> getPersonUser() {
 		return personService.getPersons();
 	}
 
