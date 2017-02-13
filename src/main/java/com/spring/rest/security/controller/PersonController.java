@@ -19,8 +19,14 @@ public class PersonController {
 	@Autowired
 	private PersonService personService;
 
-	@RequestMapping(value="/person/addPerson", method=RequestMethod.POST)
+	@RequestMapping(value="person/addPerson", method=RequestMethod.POST)
 	public Person addPerson(@RequestBody Person person) {
+		return personService.addPerson(person);
+
+	}
+	
+	@RequestMapping(value="person/addPersons", method=RequestMethod.POST)
+	public List<Person> addPerson(@RequestBody List<Person> person) {
 		return personService.addPerson(person);
 
 	}
@@ -31,12 +37,12 @@ public class PersonController {
 	}
 
 	@RequestMapping(value="person/getPersonAdmin", method=RequestMethod.GET)
-	@PreAuthorize("hasRole('ADMIN')")
+	//@PreAuthorize("hasRole('ADMIN')")
 	public List<Person> getPersonAdmin() {
 		return personService.getPersons();
 	}
 	@RequestMapping(value="person/user/getPersonUser", method=RequestMethod.GET)
-	@PreAuthorize("hasRole('USER')")
+	//@PreAuthorize("hasRole('USER')")
 	public List<Person> getPersonUser() {
 		return personService.getPersons();
 	}

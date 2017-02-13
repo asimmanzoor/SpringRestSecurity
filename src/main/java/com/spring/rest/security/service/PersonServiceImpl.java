@@ -2,7 +2,6 @@ package com.spring.rest.security.service;
 
 import java.util.List;
 
-import org.apache.regexp.recompile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +41,11 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public void deletePerson(Person person) {
 		personRepository.delete(person);
+	}
+
+	@Override
+	public List<Person> addPerson(List<Person> person) {
+		return personRepository.save(person);
 	}
 
 

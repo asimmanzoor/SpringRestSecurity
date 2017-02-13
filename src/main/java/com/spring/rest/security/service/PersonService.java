@@ -10,4 +10,5 @@ public interface PersonService {
 	public void deletePerson(String id);
 	public void deletePerson(Person person);
 	public Person updatePerson(Person person);
+	public List<Person> addPerson(List<Person> person);
 }
