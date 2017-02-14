@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.rest.security.model.Person;
@@ -19,53 +20,61 @@ public class PersonController {
 	@Autowired
 	private PersonService personService;
 
-	@RequestMapping(value="person/addPerson", method=RequestMethod.POST)
+	@RequestMapping(value = "person/addPerson", method = RequestMethod.POST)
 	public Person addPerson(@RequestBody Person person) {
 		return personService.addPerson(person);
 
 	}
-	
-	@RequestMapping(value="person/addPersons", method=RequestMethod.POST)
+
+	@RequestMapping(value = "person/addPersons", method = RequestMethod.POST)
 	public List<Person> addPerson(@RequestBody List<Person> person) {
 		return personService.addPerson(person);
 
 	}
 
-	@RequestMapping(value="person/user/getPerson", method=RequestMethod.GET)
+	@RequestMapping(value = "person/user/getPerson", method = RequestMethod.GET)
 	public List<Person> getPerson() {
 		return personService.getPersons();
 	}
 
-	@RequestMapping(value="person/getPersonAdmin", method=RequestMethod.GET)
-	//@PreAuthorize("hasRole('ADMIN')")
+	@RequestMapping(value = "person/getPersonAdmin", method = RequestMethod.GET)
+	// @PreAuthorize("hasRole('ADMIN')")
 	public List<Person> getPersonAdmin() {
 		return personService.getPersons();
 	}
-	@RequestMapping(value="person/user/getPersonUser", method=RequestMethod.GET)
-	//@PreAuthorize("hasRole('USER')")
+
+	@RequestMapping(value = "person/user/getPersonUser", method = RequestMethod.GET)
+	// @PreAuthorize("hasRole('USER')")
 	public List<Person> getPersonUser() {
 		return personService.getPersons();
 	}
 
-	@RequestMapping(value="person/updatePerson", method=RequestMethod.PUT)
+	@RequestMapping(value = "person/updatePerson", method = RequestMethod.PUT)
 	@PreAuthorize("hasRole('ADMIN')")
 	public Person updatePerson(@RequestBody Person person) {
 		return personService.updatePerson(person);
 	}
 
-	@RequestMapping(value="person/deletePerson/{id}", method=RequestMethod.DELETE)
+	@RequestMapping(value = "person/deletePerson/{id}", method = RequestMethod.DELETE)
 	@PreAuthorize("hasRole('ADMIN')")
 	public String deletePersonById(@PathVariable String id) {
 		personService.deletePerson(id);
 		return "Person has been deleted !";
 	}
 
-	@RequestMapping(value="person/deletePerson", method=RequestMethod.DELETE)
+	@RequestMapping(value = "person/deletePersonByParam", method = RequestMethod.DELETE, produces = 
+			"application/json" , consumes = "application/json")
+	@PreAuthorize("hasRole('ADMIN')")
+	public String deletePersonByIdParam(@RequestParam("id") String id) {
+		personService.deletePerson(id);
+		return "Person has been deleted !";
+	}
+
+	@RequestMapping(value = "person/deletePerson", method = RequestMethod.DELETE)
 	@PreAuthorize("hasRole('ADMIN')")
 	public String deletePersonById(@RequestBody Person person) {
 		personService.deletePerson(person);
 		return "Person has been deleted !";
 	}
-
 
 }
